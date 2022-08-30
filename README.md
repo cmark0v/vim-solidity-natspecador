@@ -1,29 +1,19 @@
-# vim-solnatspec
+# vim-solidity-natspecador
 
-Tired of writing NatSpec comments by hand?  
-Saw the format and thought to yourself, *wow that doesn't look fun to type out*?
+tiennes odio por escritar natspec?
 
-**Then, this is the plugin for you!**
+eres un sabio, un usuario de vim o neovim?
 
-## Requirements
-- `solc` in your path. The real, full `solc`, none of that `solcjs` nonsense
-- `python3 >= 3.6` we using f-strings here, beware
+## 
+- `solc`  - en el path. queda puto solcjs 
+- `python3 >= 3.6`
 
-## Installation
+## instalación
 
-If you're using some sort of plugin manager, just add this to your init.vim
+usuarios de vim-plug:
+
 ```vim
 Plug 'fmorisan/vim-solnatspec'
 ```
-And before you ask, yes - it works with both NeoVim and Vim.
 
-## Usage
 
-Put your cursor on a function's name (preferrably in its definition line) and exec  
-```
-:SolNatSpec
-```
-This will insert an already formatted NatSpec comment above your cursor. Feel free to bind this call somewhere.
-
-## Contributing
-Just throw a PR here. Help would be great. I don't understand VimScript fully, but this was fun to hack together.
