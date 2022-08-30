@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import __main__
 import sys
 import json
 import argparse
@@ -12,7 +12,7 @@ ap.add_argument("-i", "--indent", default=0, help="Indentation level in space co
 
 args = ap.parse_args()
 
-solc_out = subprocess.check_output(['solc', '--ast-json', args.file]).decode('utf8')
+solc_out = subprocess.check_output(['solc', '--ast-compact-json', args.file]).decode('utf8')
 solc_split = solc_out.split('\n')
 
 author_name = subprocess.check_output([
@@ -46,58 +46,53 @@ for i, line in enumerate(solc_split):
 ast_json = json.loads(
     "\n".join(solc_split[start+1:end])
 )
-
+params = []
+returnz = []
 def line_dfs(node):
-    node_attributes = node.get('attributes', {})
     # solc AST doesnt give us line numbers LMAO
     byte_pos = int(node.get('src').split(':')[0])
     # hacker moment
     line_nr = min(line for (line, byte) in enumerate(linebreak_byte_numbers) if byte >= byte_pos)
-    if line_nr == args.line and node.get('name') in ['ContractDefinition', 'FunctionDefinition']:
-        return node
+    if line_nr == args.line and node.get('nodeType') in ['ContractDefinition', 'FunctionDefinition']:
+        __main__.params = __main__.params + getnames(node.get('parameters',{}).get('parameters'))
+        __main__.returnz = __main__.returnz +  getnames(node.get('returnParameters',{}).get('parameters'))
     else:
-        children = node.get('children')
-        if not children:
+        nodes = node.get('nodes')
+        if not nodes:
             return None
         else:
-            for child in children:
+            for child in nodes:
                 success = line_dfs(child)
                 if success:
                     return success
 
-
-def look_for_parameters(function_node):
-    parameter_list_node = list(
-        filter(
-            lambda x: x.get('name') == "ParameterList",
-            function_node.get('children')
-        )
-    )[0]
-    return parameter_list_node.get('children')
-
+def getnames(bob):
+    out = []
+    if type(bob) is list:
+        for b in bob:
+            out.append(b)
+    return out
 
 def print_indented(string):
     print(' '*int(args.indent) + string)
 
 if args.line:
     symbol_node = line_dfs(ast_json)
-else:
-    symbol_node = dfs(ast_json)
+#else:
+#    symbol_node = dfs(ast_json)
 
 
-if not symbol_node:
-    sys.exit(1)
 
-if symbol_node.get('name') == "ContractDefinition":
-    print_indented(
-        f"/// @author {author_name} ({author_email})"
-    )
-    print_indented(
-        f"/// @title {symbol_node['attributes']['name']}"
-    )
+#    print_indented(
+#        f"/// @author {author_nodeType} ({author_email})"
+#    )
+#    print_indented(
+#        f"/// @title {symbol_node['attributes']['nodeType']}"
+#    )
 print_indented(f"/// @notice")
 print_indented(f"/// @dev")
-if symbol_node.get('name') == "FunctionDefinition":
-    params = look_for_parameters(symbol_node)
-    for param in params:
-        print_indented(f"/// @param {param['attributes']['name']} {param['attributes']['type']}")
+for param in params:
+    print_indented(f"/// @param {param['name']} {param['typeName']['name']}")
+for param in returnz:
+    print_indented(f"/// @return {param['name']} {param['typeName']['name']}")
+
