@@ -13,7 +13,7 @@ eres un sabio, un usuario de vim o neovim?
 usuarios de vim-plug:
 
 ```vim
-Plug 'fmorisan/vim-solnatspec'
+Plug 'fmorisan/vim-solidity-natspecador
 ```
 
 
