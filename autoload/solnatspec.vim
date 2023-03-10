@@ -51,7 +51,7 @@ function! solnatspec#insert(...) abort
       let cmd = s:create_cmd(expand('%'), line, len(indent))
 
       echo cmd
-      exec 'normal!kr!' . expand(cmd)
+      exec 'r!' . expand(cmd)
 
       let g:solnatspec_lastcmd = cmd
   catch
