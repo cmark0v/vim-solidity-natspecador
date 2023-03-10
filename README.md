@@ -16,4 +16,7 @@ usuarios de vim-plug:
 Plug 'fmorisan/vim-solidity-natspecador
 ```
 
-
+##usalo
+mueve el puntero hasta una lina antes la delaración del función y `:SolNatSpec` haga
+##usalo
+mueve el puntero hasta una lina antes la delaración del función y `:SolNatSpec` haga
