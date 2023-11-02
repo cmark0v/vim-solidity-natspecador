@@ -1,7 +1,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-command! -nargs=0 -range=0 -complete=customlist,solnatspec SolNatSpec call solnatspec#insert(<q-args>, <count>, <line1>, <line2>)
+command! -nargs=0 -range=0  SolNatSpec call solnatspec#insert(<q-args>, <count>, <line1>, <line2>)
 
 if !exists('g:solnatspec_enable_mapping')
   let g:solnatspec_enable_mapping = 1
