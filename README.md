@@ -13,7 +13,7 @@ eres un sabio, un usuario de vim o neovim?
 usuarios de vim-plug:
 
 ```vim
-Plug 'cmark0v/vim-solidity-natspecador
+Plug 'cmark0v/vim-solidity-natspecador'
 ```
 
 ## usando
@@ -22,11 +22,13 @@ mueve el puntero hasta una lina antes la delaración del función entonces haga 
 
 #######################################
 
-This is forked from https://github.com/fmorisan/vim-solnatspec. It was broken in one or two places due to changes in solc and maybe vim quirks. the name is better in spanish
+This is forked from https://github.com/fmorisan/vim-solnatspec. It was broken in one or two placies due to changes in solc and maybe vim quirks. the name is better in spanish
+
+The code is compiled and the json artifacts are used to pull the function signatures and other information to create a natspec template for the function, which you then fill in with your descriptions
 
 how to use:
-  - save file buffer to disk
-  - put cursor line above function you want to generate natspec template for
+  - save file buffer to disk. it has to be compiled and is done from the file path at the moment. 
+  - put cursor one line above function you want to generate natspec template for
   - ``:SolNatSpec`` command
   - fill in your comments
 
@@ -37,7 +39,7 @@ config
 
 
 improvements would be: 
-- output somesort of feedback when it doesnt have anything to output
+- output somesort of feedback when it doesnt have anything to output due to line mismatch or otherwise
 - autoselect appropriate solc version using solc-selector and parseing the header pragma on the solidity file, not too hard
 - make it work on a selected range in visual mode
 - maybe generate the output for the closest function definition to cursor
